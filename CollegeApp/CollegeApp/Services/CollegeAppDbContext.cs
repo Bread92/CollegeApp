@@ -13,6 +13,9 @@ public class CollegeAppDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder mb)
     {
+        var directorModel = mb.Entity<Director>();
+        directorModel.HasKey(x => x.Id);
+        
         base.OnModelCreating(mb);
     }
 
