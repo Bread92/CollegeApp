@@ -1,4 +1,6 @@
-﻿namespace CollegeApp.Entities;
+﻿using CollegeApp.Dtos;
+
+namespace CollegeApp.Entities;
 
 public class Director
 {
@@ -6,4 +8,5 @@ public class Director
     public string Name { get; set; } = null!;
     
     public virtual ICollection<Workshop>? Workshops { get; set; }
+    
 }

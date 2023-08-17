@@ -1,3 +1,4 @@
+using CollegeApp.Entities;
 using CollegeApp.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,9 @@ services.AddDbContext<CollegeAppDbContext>(options =>
 {
     options.UseSqlite("Data Source=college.db");
 });
+
+//Services
+services.AddScoped<IDirectorService, DirectorService>();
 
 var app = builder.Build();
 
