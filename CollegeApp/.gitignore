@@ -1,4 +1,4 @@
-###################
+﻿###################
 # compiled source #
 ###################
 *.com
@@ -25,6 +25,7 @@ _UpgradeReport_Files/
 bin/
 obj/
 TestResults/
+Migrations/
 ###################
 # Web publish log #
 ###################
@@ -52,6 +53,7 @@ TestResults/
 ######################
 *.log
 *.sqlite
+*.db
 # OS generated files #
 ######################
 .DS_Store?
