@@ -9,8 +9,8 @@ public class CollegeAppDbContext : DbContext
     {
     }
 
-    public DbSet<Director>? Directors { get; set; } = null!;
-    public DbSet<Workshop>? Workshops { get; set; } = null!;
+    public DbSet<Director> Directors { get; set; } = null!;
+    public DbSet<Workshop> Workshops { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder mb)
     {

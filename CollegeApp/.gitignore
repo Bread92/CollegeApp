@@ -60,6 +60,7 @@ Migrations/
 ehthumbs.db
 Icon?
 Thumbs.db
+*.xml
 [Bb]in
 [Oo]bj
 [Tt]est[Rr]esults

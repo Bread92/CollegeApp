@@ -20,27 +20,21 @@ namespace CollegeApp.Controllers
         // GET: Directors
         public async Task<IActionResult> Index()
         {
-              return _context.Directors != null ? 
-                          View(await _context.Directors.ToListAsync()) :
-                          Problem("Entity set 'CollegeAppDbContext.Directors'  is null.");
+            var directorDtos = await _directorService.GetAllDirectorsAsync();
+            return View(directorDtos);
         }
 
         // GET: Directors/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null || _context.Directors == null)
+            var dto = await _directorService.GetOneAsync(id);
+            
+            if (dto == null)
             {
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
-            {
-                return NotFound();
-            }
-
-            return View(director);
+            return View(dto);
         }
 
         // GET: Directors/Create
@@ -59,26 +53,24 @@ namespace CollegeApp.Controllers
             if (ModelState.IsValid)
             {
                 await _directorService.CreateDirectorAsync(createDto);
-                
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(createDto);
         }
 
         // GET: Directors/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null || _context.Directors == null)
+            var dto = await _directorService.GetOneAsync(id);
+            
+            if (dto == null)
             {
                 return NotFound();
             }
 
-            var director = await _context.Directors.FindAsync(id);
-            if (director == null)
-            {
-                return NotFound();
-            }
-            return View(director.ToDto());
+            return View(dto);
         }
 
         // POST: Directors/Edit/5
@@ -93,45 +85,24 @@ namespace CollegeApp.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DirectorExists(dto.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(dto);
+            if (!ModelState.IsValid) return View(dto);
+
+            await _directorService.UpdateAsync(dto, id);
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Directors/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null || _context.Directors == null)
+            var dto = await _directorService.DeleteOneAsync(id);
+            if (dto == null)
             {
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
-            {
-                return NotFound();
-            }
-
-            return View(director);
+            return View(dto);
         }
 
         // POST: Directors/Delete/5
@@ -143,19 +114,20 @@ namespace CollegeApp.Controllers
             {
                 return Problem("Entity set 'CollegeAppDbContext.Directors'  is null.");
             }
+
             var director = await _context.Directors.FindAsync(id);
             if (director != null)
             {
                 _context.Directors.Remove(director);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DirectorExists(Guid id)
         {
-          return (_context.Directors?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Directors?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

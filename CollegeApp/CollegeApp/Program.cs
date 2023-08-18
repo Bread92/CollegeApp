@@ -1,4 +1,3 @@
-using CollegeApp.Entities;
 using CollegeApp.Services;
 using Microsoft.EntityFrameworkCore;
 
