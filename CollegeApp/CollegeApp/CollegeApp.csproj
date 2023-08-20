@@ -23,8 +23,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Directors\" />
-      <Folder Include="Views\Workshops\" />
+      <Folder Include="Dtos\" />
+      <Folder Include="Entities\" />
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
 </Project>
