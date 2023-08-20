@@ -64,5 +64,4 @@ public class CollegeAppDbContext : DbContext
         
         base.OnModelCreating(mb);
     }
-
 }

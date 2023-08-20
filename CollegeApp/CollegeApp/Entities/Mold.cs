@@ -1,6 +1,6 @@
 ﻿namespace CollegeApp.Entities;
 
-public class Mold //Press form
+public class Mold
 {
     public Guid MoldId { get; set; }
 
