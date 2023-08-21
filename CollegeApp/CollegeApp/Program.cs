@@ -13,7 +13,7 @@ services.AddDbContext<CollegeAppDbContext>(options =>
 });
 
 //Services
-//services.AddScoped<IDirectorService, DirectorService>();
+services.AddScoped<IDirectorsService, DirectorsService>();
 
 var app = builder.Build();
 

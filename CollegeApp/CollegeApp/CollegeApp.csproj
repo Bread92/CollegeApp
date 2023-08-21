@@ -23,8 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Dtos\" />
       <Folder Include="Migrations\" />
+      <Folder Include="Views\Directors\" />
     </ItemGroup>
 
 </Project>
