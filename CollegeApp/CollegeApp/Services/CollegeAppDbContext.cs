@@ -15,6 +15,7 @@ public class CollegeAppDbContext : DbContext
     public DbSet<Mold> Molds { get; set; } = null!;
     public DbSet<Repair> Repairs { get; set; } = null!;
     public DbSet<Repairman> Repairmen { get; set; } = null!;
+    public DbSet<MoldPurpose> MoldPurposes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
@@ -61,6 +62,14 @@ public class CollegeAppDbContext : DbContext
         //Repairman
         var repairmanModel = mb.Entity<Repairman>();
         repairmanModel.HasKey(x => x.RepairmanId);
+        
+        //MoldPurpose
+        var moldPurposeModel = mb.Entity<MoldPurpose>();
+        moldPurposeModel.HasKey(x => x.MoldPurposeId);
+
+        moldPurposeModel.HasOne<Mold>()
+            .WithMany()
+            .HasForeignKey(x => x.MoldPurposeId);
         
         base.OnModelCreating(mb);
     }
