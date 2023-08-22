@@ -1,18 +1,16 @@
 using CollegeApp.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CollegeApp.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
     public class DirectorsController : Controller
     {
-        private readonly CollegeAppDbContext _context;
         private readonly IDirectorsService _directorsService;
         
-        public DirectorsController(CollegeAppDbContext context, IDirectorsService directorsService)
+        public DirectorsController(IDirectorsService directorsService)
         {
-            _context = context;
             _directorsService = directorsService;
         }
 
@@ -116,12 +114,7 @@ namespace CollegeApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var director = await _directorsService.GetOneAsync(id);
-            
-            if (director != null)
-            {
-                await _directorsService.DeleteAsync(id);
-            }
+            await _directorsService.DeleteAsync(id);
             
             return RedirectToAction(nameof(Index));
         }

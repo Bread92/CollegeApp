@@ -14,6 +14,7 @@ services.AddDbContext<CollegeAppDbContext>(options =>
 
 //Services
 services.AddScoped<IDirectorsService, DirectorsService>();
+services.AddScoped<IWorkshopsService, WorkshopsService>();
 
 var app = builder.Build();
 
