@@ -46,6 +46,10 @@ public class CollegeAppDbContext : DbContext
         moldModel.HasOne<Workshop>()
             .WithMany()
             .HasForeignKey(x => x.WorkshopId);
+
+        moldModel.HasOne<MoldPurpose>()
+            .WithMany()
+            .HasForeignKey(x => x.MoldPurposeId);
         
         //Repair
         var repairModel = mb.Entity<Repair>();
@@ -67,10 +71,6 @@ public class CollegeAppDbContext : DbContext
         var moldPurposeModel = mb.Entity<MoldPurpose>();
         moldPurposeModel.HasKey(x => x.MoldPurposeId);
 
-        moldPurposeModel.HasOne<Mold>()
-            .WithMany()
-            .HasForeignKey(x => x.MoldPurposeId);
-        
         base.OnModelCreating(mb);
     }
 }
