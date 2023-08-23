@@ -19,13 +19,13 @@ namespace CollegeApp.Controllers
             _sectorsService = sectorsService;
         }
 
-        // GET: Workshops
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _workshopsService.GetAllAsync());
         }
 
-        // GET: Workshops/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -43,7 +43,7 @@ namespace CollegeApp.Controllers
             return View(workshop);
         }
 
-        // GET: Workshops/Create
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
@@ -56,8 +56,7 @@ namespace CollegeApp.Controllers
             
             return View();
         }
-
-        // POST: Workshops/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopCreateDto workshopCreateDto)
@@ -69,7 +68,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Workshops/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
             ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
@@ -93,8 +92,7 @@ namespace CollegeApp.Controllers
             }
             return View(workshop);
         }
-
-        // POST: Workshops/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopDto workshopDto)
@@ -111,7 +109,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Workshops/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -128,8 +126,7 @@ namespace CollegeApp.Controllers
 
             return View(workshop);
         }
-
-        // POST: Workshops/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

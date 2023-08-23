@@ -14,13 +14,13 @@ namespace CollegeApp.Controllers
             _directorsService = directorsService;
         }
 
-        // GET: Directors
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _directorsService.GetAllAsync());
         }
 
-        // GET: Directors/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -38,13 +38,12 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        // GET: Directors/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Directors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DirectorId,FullName")] DirectorCreateDto directorCreateDto)
@@ -56,7 +55,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Directors/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -73,7 +72,6 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        // POST: Directors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("DirectorId,FullName")] DirectorDto director)
@@ -89,7 +87,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Directors/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -109,7 +107,6 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        // POST: Directors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

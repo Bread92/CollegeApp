@@ -1,7 +1,5 @@
 using CollegeApp.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CollegeApp.Entities;
 using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
@@ -15,13 +13,13 @@ namespace CollegeApp.Controllers
             _sectorsService = sectorsService;
         }
 
-        // GET: Sectors
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _sectorsService.GetAllAsync());
         }
 
-        // GET: Sectors/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -39,15 +37,12 @@ namespace CollegeApp.Controllers
             return View(sector);
         }
 
-        // GET: Sectors/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: Sectors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SectorId,Name")] SectorCreateDto createDto)
@@ -59,7 +54,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Sectors/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -76,8 +71,7 @@ namespace CollegeApp.Controllers
             
             return View(sectorDto);
         }
-
-        // POST: Sectors/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("SectorId,Name")] SectorDto updateDto)
@@ -94,7 +88,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Sectors/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -111,8 +105,7 @@ namespace CollegeApp.Controllers
 
             return View(sectorDto);
         }
-
-        // POST: Sectors/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
