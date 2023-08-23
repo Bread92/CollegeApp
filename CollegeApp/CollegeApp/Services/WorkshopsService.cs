@@ -66,14 +66,8 @@ public class WorkshopsService : IWorkshopsService
 
     public async Task<WorkshopDto> DeleteAsync(Guid? workshopId)
     {
-        var workshopToDelete = await _dbContext.Workshops.FirstOrDefaultAsync(x => x.WorkshopId == workshopId);
+        var workshopToDelete = await _dbContext.Workshops.FirstAsync(x => x.WorkshopId == workshopId);
 
-        if (workshopToDelete is null)
-        {
-            //!
-            throw new Exception("directorToDelete was null.");
-        }
-        
         _dbContext.Remove(workshopToDelete);
 
         await _dbContext.SaveChangesAsync();

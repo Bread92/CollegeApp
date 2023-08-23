@@ -70,16 +70,11 @@ public class DirectorsService : IDirectorsService
     //TODO: get to know what to do in this case
     public async Task<DirectorDto> DeleteAsync(Guid? directorId)
     {
-        var directorToDelete = await _dbContext.Directors.FirstOrDefaultAsync(x => x.DirectorId == directorId);
+        var directorToDelete = await _dbContext.Directors.FirstAsync(x => x.DirectorId == directorId);
 
-        if (directorToDelete is null)
-        {
-            //!
-            throw new Exception("directorToDelete was null.");
-        }
-        
         _dbContext.Directors.Remove(directorToDelete);
         await _dbContext.SaveChangesAsync();
+        
         return directorToDelete.ToDto();
     }
 

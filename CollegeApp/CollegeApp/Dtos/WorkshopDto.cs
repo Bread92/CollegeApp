@@ -19,8 +19,10 @@ public static class WorkshopDtoExtensions
     {
         return new WorkshopDto()
         {
+            WorkshopId = workshop.WorkshopId,
+            Name = workshop.Name,
             DirectorId = workshop.DirectorId,
-            Name = workshop.Name
+            SectorId = workshop.SectorId
         };
     }
 }
