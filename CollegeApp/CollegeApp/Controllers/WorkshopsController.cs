@@ -9,11 +9,14 @@ namespace CollegeApp.Controllers
     {
         private readonly IWorkshopsService _workshopsService;
         private readonly IDirectorsService _directorsService;
+        private readonly ISectorsService _sectorsService;
+        
 
-        public WorkshopsController(IWorkshopsService workshopsService, IDirectorsService directorsService)
+        public WorkshopsController(IWorkshopsService workshopsService, IDirectorsService directorsService, ISectorsService sectorsService)
         {
             _workshopsService = workshopsService;
             _directorsService = directorsService;
+            _sectorsService = sectorsService;
         }
 
         // GET: Workshops
@@ -47,6 +50,10 @@ namespace CollegeApp.Controllers
                 nameof(DirectorDto.DirectorId), 
                 nameof(DirectorDto.FullName));
             
+            ViewBag.SectorId = new SelectList(await _sectorsService.GetAllAsync(), 
+                nameof(SectorDto.SectorId), 
+                nameof(SectorDto.Name));
+            
             return View();
         }
 
@@ -65,6 +72,14 @@ namespace CollegeApp.Controllers
         // GET: Workshops/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
+                nameof(DirectorDto.DirectorId), 
+                nameof(DirectorDto.FullName));
+            
+            ViewBag.SectorId = new SelectList(await _sectorsService.GetAllAsync(), 
+                nameof(SectorDto.SectorId), 
+                nameof(SectorDto.Name));
+            
             if (id == null)
             {
                 return NotFound();

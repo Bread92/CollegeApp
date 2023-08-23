@@ -25,6 +25,7 @@
     <ItemGroup>
       <Folder Include="Migrations\" />
       <Folder Include="Views\Directors\" />
+      <Folder Include="Views\Sectors\" />
       <Folder Include="Views\Workshops\" />
     </ItemGroup>
 
