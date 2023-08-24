@@ -45,13 +45,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
-                nameof(DirectorDto.DirectorId), 
-                nameof(DirectorDto.FullName));
-            
-            ViewBag.SectorId = new SelectList(await _sectorsService.GetAllAsync(), 
-                nameof(SectorDto.SectorId), 
-                nameof(SectorDto.Name));
+            PopulateWorkshopsViewBagsAsync();
             
             return View();
         }
@@ -60,6 +54,8 @@ namespace CollegeApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopCreateDto workshopCreateDto)
         {
+            PopulateWorkshopsViewBagsAsync();
+            
             if (!ModelState.IsValid) return View(workshopCreateDto);
 
             await _workshopsService.CreateAsync(workshopCreateDto);
@@ -70,13 +66,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
-                nameof(DirectorDto.DirectorId), 
-                nameof(DirectorDto.FullName));
-            
-            ViewBag.SectorId = new SelectList(await _sectorsService.GetAllAsync(), 
-                nameof(SectorDto.SectorId), 
-                nameof(SectorDto.Name));
+            PopulateWorkshopsViewBagsAsync();
             
             if (id == null)
             {
@@ -133,6 +123,17 @@ namespace CollegeApp.Controllers
             await _workshopsService.DeleteAsync(id);
             
             return RedirectToAction(nameof(Index));
+        }
+
+        public async void PopulateWorkshopsViewBagsAsync()
+        {
+            ViewBag.DirectorId = new SelectList(await _directorsService.GetAllAsync(), 
+                nameof(DirectorDto.DirectorId), 
+                nameof(DirectorDto.FullName));
+            
+            ViewBag.SectorId = new SelectList(await _sectorsService.GetAllAsync(), 
+                nameof(SectorDto.SectorId), 
+                nameof(SectorDto.Name));
         }
     }
 }

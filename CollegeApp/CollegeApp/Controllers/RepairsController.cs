@@ -45,13 +45,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.RepairmanId = new SelectList(await _repairmenService.GetAllAsync(), 
-                nameof(RepairmanDto.RepairmanId), 
-                nameof(RepairmanDto.FullName));
-            
-            ViewBag.MoldId = new SelectList(await _moldsService.GetAllAsync(), 
-                nameof(MoldDto.MoldId), 
-                nameof(MoldDto.Name));
+            PopulateRepairsViewBagsAsync();
             
             return View();
         }
@@ -60,6 +54,8 @@ namespace CollegeApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RepairId,RepairTime,RepairmanId,MoldId,Description")] RepairCreateDto createDto)
         {
+            PopulateRepairsViewBagsAsync();
+            
             if (!ModelState.IsValid) return View(createDto);
 
             await _repairsService.CreateAsync(createDto);
@@ -70,13 +66,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            ViewBag.RepairmanId = new SelectList(await _repairmenService.GetAllAsync(), 
-                nameof(RepairmanDto.RepairmanId), 
-                nameof(RepairmanDto.FullName));
-            
-            ViewBag.MoldId = new SelectList(await _moldsService.GetAllAsync(), 
-                nameof(MoldDto.MoldId), 
-                nameof(MoldDto.Name));
+            PopulateRepairsViewBagsAsync();
             
             if (id == null)
             {
@@ -138,6 +128,17 @@ namespace CollegeApp.Controllers
             }
             
             return RedirectToAction(nameof(Index));
+        }
+
+        public async void PopulateRepairsViewBagsAsync()
+        {
+            ViewBag.RepairmanId = new SelectList(await _repairmenService.GetAllAsync(), 
+                nameof(RepairmanDto.RepairmanId), 
+                nameof(RepairmanDto.FullName));
+            
+            ViewBag.MoldId = new SelectList(await _moldsService.GetAllAsync(), 
+                nameof(MoldDto.MoldId), 
+                nameof(MoldDto.Name));
         }
     }
 }

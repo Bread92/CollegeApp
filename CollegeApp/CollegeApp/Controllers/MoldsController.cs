@@ -45,13 +45,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.WorkshopId = new SelectList(await _workshopsService.GetAllAsync(), 
-                nameof(WorkshopDto.WorkshopId), 
-                nameof(WorkshopDto.Name));
-            
-            ViewBag.MoldPurposeId = new SelectList(await _moldPurposesService.GetAllAsync(), 
-                nameof(MoldPurposeDto.MoldPurposeId), 
-                nameof(MoldPurposeDto.PurposeName));
+            PopulateMoldsViewBagsAsync();
             
             return View();
         }
@@ -60,6 +54,8 @@ namespace CollegeApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoldId,MoldPurposeId,Name,InstallationDate,WorkshopId")] MoldCreateDto createDto)
         {
+            PopulateMoldsViewBagsAsync();
+            
             if (!ModelState.IsValid) return View(createDto);
 
             await _moldsService.CreateAsync(createDto);
@@ -70,13 +66,7 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            ViewBag.WorkshopId = new SelectList(await _workshopsService.GetAllAsync(), 
-                nameof(WorkshopDto.WorkshopId), 
-                nameof(WorkshopDto.Name));
-            
-            ViewBag.MoldPurposeId = new SelectList(await _moldPurposesService.GetAllAsync(), 
-                nameof(MoldPurposeDto.MoldPurposeId), 
-                nameof(MoldPurposeDto.PurposeName));
+            PopulateMoldsViewBagsAsync();
             
             if (id == null)
             {
@@ -138,6 +128,17 @@ namespace CollegeApp.Controllers
             }
             
             return RedirectToAction(nameof(Index));
+        }
+
+        public async void PopulateMoldsViewBagsAsync()
+        {
+            ViewBag.WorkshopId = new SelectList(await _workshopsService.GetAllAsync(), 
+                nameof(WorkshopDto.WorkshopId), 
+                nameof(WorkshopDto.Name));
+            
+            ViewBag.MoldPurposeId = new SelectList(await _moldPurposesService.GetAllAsync(), 
+                nameof(MoldPurposeDto.MoldPurposeId), 
+                nameof(MoldPurposeDto.PurposeName));
         }
     }
 }
