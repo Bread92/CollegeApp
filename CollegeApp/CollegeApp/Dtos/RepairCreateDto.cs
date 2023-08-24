@@ -3,6 +3,8 @@
 public class RepairCreateDto
 {
     public DateTime RepairTime { get; set; }
+
+    public string Description { get; set; }
     
     // Foreign keys
 

@@ -4,6 +4,8 @@ public class Repair
 {
     public Guid RepairId { get; set; }
 
+    public string Description { get; set; }
+
     public DateTime RepairTime { get; set; }
     
     //Foreign Keys

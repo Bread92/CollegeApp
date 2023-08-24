@@ -28,6 +28,7 @@
       <Folder Include="Views\MoldPurposes\" />
       <Folder Include="Views\Molds\" />
       <Folder Include="Views\Repairmen\" />
+      <Folder Include="Views\Repairs\" />
       <Folder Include="Views\Sectors\" />
       <Folder Include="Views\Workshops\" />
     </ItemGroup>

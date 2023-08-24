@@ -5,8 +5,8 @@ namespace CollegeApp.Dtos;
 public class RepairDto
 {
     public Guid RepairId { get; set; }
-
     public DateTime RepairTime { get; set; }
+    public string Description { get; set; }
     
     // Foreign keys
 
@@ -24,7 +24,8 @@ public static class RepairDtoExtensions
             RepairId = repair.RepairId,
             RepairTime = repair.RepairTime,
             MoldId = repair.MoldId,
-            RepairmanId = repair.RepairmanId
+            RepairmanId = repair.RepairmanId,
+            Description = repair.Description
         };
     }
 }

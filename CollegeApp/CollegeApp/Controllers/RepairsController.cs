@@ -58,7 +58,7 @@ namespace CollegeApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RepairId,RepairTime,RepairmanId,MoldId")] RepairCreateDto createDto)
+        public async Task<IActionResult> Create([Bind("RepairId,RepairTime,RepairmanId,MoldId,Description")] RepairCreateDto createDto)
         {
             if (!ModelState.IsValid) return View(createDto);
 

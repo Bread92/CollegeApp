@@ -30,7 +30,8 @@ public class RepairsService : IRepairsService
             RepairId = Guid.NewGuid(),
             RepairTime = createDto.RepairTime,
             MoldId = createDto.MoldId,
-            RepairmanId = createDto.RepairmanId
+            RepairmanId = createDto.RepairmanId,
+            Description = createDto.Description
         };
 
         _dbContext.Add(newRepair);
@@ -58,6 +59,7 @@ public class RepairsService : IRepairsService
         repair.MoldId = updateDto.MoldId;
         repair.RepairmanId = updateDto.RepairmanId;
         repair.RepairTime = updateDto.RepairTime;
+        repair.Description = updateDto.Description;
 
         await _dbContext.SaveChangesAsync();
 
@@ -66,7 +68,8 @@ public class RepairsService : IRepairsService
             RepairId = repair.RepairId,
             RepairTime = repair.RepairTime,
             MoldId = repair.MoldId,
-            RepairmanId = repair.RepairmanId
+            RepairmanId = repair.RepairmanId,
+            Description = repair.Description
         };
 
         return updatedDto;
