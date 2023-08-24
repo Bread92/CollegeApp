@@ -9,11 +9,13 @@ namespace CollegeApp.Controllers
     {
         private readonly IRepairsService _repairsService;
         private readonly IRepairmenService _repairmenService;
+        private readonly IMoldsService _moldsService;
 
-        public RepairsController(IRepairsService repairsService, IRepairmenService repairmenService)
+        public RepairsController(IRepairsService repairsService, IRepairmenService repairmenService, IMoldsService moldsService)
         {
             _repairsService = repairsService;
             _repairmenService = repairmenService;
+            _moldsService = moldsService;
         }
 
         [HttpGet]
@@ -43,9 +45,13 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.MoldId = new SelectList(await _repairmenService.GetAllAsync(), 
+            ViewBag.RepairmanId = new SelectList(await _repairmenService.GetAllAsync(), 
                 nameof(RepairmanDto.RepairmanId), 
                 nameof(RepairmanDto.FullName));
+            
+            ViewBag.MoldId = new SelectList(await _moldsService.GetAllAsync(), 
+                nameof(MoldDto.MoldId), 
+                nameof(MoldDto.Name));
             
             return View();
         }
@@ -64,6 +70,14 @@ namespace CollegeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
+            ViewBag.RepairmanId = new SelectList(await _repairmenService.GetAllAsync(), 
+                nameof(RepairmanDto.RepairmanId), 
+                nameof(RepairmanDto.FullName));
+            
+            ViewBag.MoldId = new SelectList(await _moldsService.GetAllAsync(), 
+                nameof(MoldDto.MoldId), 
+                nameof(MoldDto.Name));
+            
             if (id == null)
             {
                 return NotFound();

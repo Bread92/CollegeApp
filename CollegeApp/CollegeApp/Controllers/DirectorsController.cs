@@ -1,7 +1,6 @@
 using CollegeApp.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {

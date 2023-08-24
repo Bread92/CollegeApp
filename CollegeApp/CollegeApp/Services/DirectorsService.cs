@@ -44,7 +44,6 @@ public class DirectorsService : IDirectorsService
         return director?.ToDto();
     }
 
-    //TODO: DirectorUpdateDto
     public async Task<DirectorDto> UpdateAsync(Guid directorId, DirectorDto updateDto)
     {
         var director = await _dbContext.Directors.FirstOrDefaultAsync(x => x.DirectorId == directorId);
@@ -67,7 +66,6 @@ public class DirectorsService : IDirectorsService
         return updatedDto;
     }
 
-    //TODO: get to know what to do in this case
     public async Task<DirectorDto> DeleteAsync(Guid? directorId)
     {
         var directorToDelete = await _dbContext.Directors.FirstAsync(x => x.DirectorId == directorId);
