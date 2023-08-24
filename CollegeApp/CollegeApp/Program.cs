@@ -19,6 +19,7 @@ services.AddScoped<ISectorsService, SectorsService>();
 services.AddScoped<IMoldPurposesService, MoldPurposesService>();
 services.AddScoped<IRepairmenService, RepairmenService>();
 services.AddScoped<IRepairsService, RepairsService>();
+services.AddScoped<IMoldsService, MoldsService>();
 
 var app = builder.Build();
 

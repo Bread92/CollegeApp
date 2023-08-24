@@ -10,7 +10,6 @@ namespace CollegeApp.Controllers
         private readonly IWorkshopsService _workshopsService;
         private readonly IDirectorsService _directorsService;
         private readonly ISectorsService _sectorsService;
-        
 
         public WorkshopsController(IWorkshopsService workshopsService, IDirectorsService directorsService, ISectorsService sectorsService)
         {
