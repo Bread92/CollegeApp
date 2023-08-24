@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Director;
 
 public class DirectorDto
 {
@@ -11,7 +9,7 @@ public class DirectorDto
 
 public static class DirectorDtoExtensions
 {
-    public static DirectorDto ToDto(this Director director)
+    public static DirectorDto ToDto(this Entities.Director director)
     {
         return new DirectorDto()
         {

@@ -1,4 +1,4 @@
-﻿namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Repair;
 
 public class RepairCreateDto
 {

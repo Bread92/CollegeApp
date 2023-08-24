@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Repairman;
 
 public class RepairmanDto
 {
@@ -11,7 +9,7 @@ public class RepairmanDto
 
 public static class RepairmanDtoExtensions
 {
-    public static RepairmanDto ToDto(this Repairman repairman)
+    public static RepairmanDto ToDto(this Entities.Repairman repairman)
     {
         return new RepairmanDto()
         {

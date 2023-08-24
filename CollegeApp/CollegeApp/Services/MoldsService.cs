@@ -1,4 +1,4 @@
-﻿using CollegeApp.Dtos;
+﻿using CollegeApp.Dtos.Mold;
 using CollegeApp.Entities;
 using Microsoft.EntityFrameworkCore;
 

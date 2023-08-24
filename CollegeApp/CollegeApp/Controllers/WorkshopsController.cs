@@ -1,4 +1,6 @@
-using CollegeApp.Dtos;
+using CollegeApp.Dtos.Workshop;
+using CollegeApp.Dtos.Sector;
+using CollegeApp.Dtos.Director;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;

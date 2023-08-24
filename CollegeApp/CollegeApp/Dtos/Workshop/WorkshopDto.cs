@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Workshop;
 
 public class WorkshopDto
 {
@@ -15,7 +13,7 @@ public class WorkshopDto
 
 public static class WorkshopDtoExtensions
 {
-    public static WorkshopDto ToDto(this Workshop workshop)
+    public static WorkshopDto ToDto(this Entities.Workshop workshop)
     {
         return new WorkshopDto()
         {

@@ -1,4 +1,4 @@
-using CollegeApp.Dtos;
+using CollegeApp.Dtos.MoldPurpose;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
 

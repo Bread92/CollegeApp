@@ -1,4 +1,4 @@
-﻿using CollegeApp.Dtos;
+﻿using CollegeApp.Dtos.Repairman;
 using CollegeApp.Entities;
 using Microsoft.EntityFrameworkCore;
 

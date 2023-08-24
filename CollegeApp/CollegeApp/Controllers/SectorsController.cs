@@ -1,4 +1,5 @@
 using CollegeApp.Dtos;
+using CollegeApp.Dtos.Sector;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
 

@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Repair;
 
 public class RepairDto
 {
@@ -17,7 +15,7 @@ public class RepairDto
 
 public static class RepairDtoExtensions
 {
-    public static RepairDto ToDto(this Repair repair)
+    public static RepairDto ToDto(this Entities.Repair repair)
     {
         return new RepairDto()
         {

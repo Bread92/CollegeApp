@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Mold;
 
 public class MoldDto
 {
@@ -18,7 +16,7 @@ public class MoldDto
 
 public static class MoldDtoExtensions
 {
-    public static MoldDto ToDto(this Mold mold)
+    public static MoldDto ToDto(this Entities.Mold mold)
     {
         return new MoldDto()
         {

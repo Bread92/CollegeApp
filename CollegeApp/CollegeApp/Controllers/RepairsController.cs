@@ -1,4 +1,6 @@
-using CollegeApp.Dtos;
+using CollegeApp.Dtos.Mold;
+using CollegeApp.Dtos.Repair;
+using CollegeApp.Dtos.Repairman;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,6 +1,4 @@
-﻿using CollegeApp.Entities;
-
-namespace CollegeApp.Dtos;
+﻿namespace CollegeApp.Dtos.Sector;
 
 public class SectorDto
 {
@@ -10,7 +8,7 @@ public class SectorDto
 
 public static class SectorDtoExtensions
 {
-    public static SectorDto ToDto(this Sector sector)
+    public static SectorDto ToDto(this Entities.Sector sector)
     {
         return new SectorDto()
         {
