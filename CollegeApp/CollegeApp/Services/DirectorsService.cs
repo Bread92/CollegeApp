@@ -8,7 +8,7 @@ public interface IDirectorsService
 {
     public Task<DirectorDto> CreateAsync(DirectorCreateDto createDto);
     public Task<DirectorDto?> GetOneAsync(Guid? directorId);
-    public Task<DirectorDto> UpdateAsync(Guid directorId, DirectorDto updateDto);
+    public Task<DirectorDto> UpdateAsync(Guid directorId, DirectorUpdateDto updateDto);
     public Task<DirectorDto> DeleteAsync(Guid? directorId);
 
     public Task<ICollection<DirectorDto>> GetAllAsync();
@@ -44,14 +44,9 @@ public class DirectorsService : IDirectorsService
         return director?.ToDto();
     }
 
-    public async Task<DirectorDto> UpdateAsync(Guid directorId, DirectorDto updateDto)
+    public async Task<DirectorDto> UpdateAsync(Guid directorId, DirectorUpdateDto updateDto)
     {
-        var director = await _dbContext.Directors.FirstOrDefaultAsync(x => x.DirectorId == directorId);
-
-        if (director is null)
-        {
-            return updateDto;
-        }
+        var director = await _dbContext.Directors.FirstAsync(x => x.DirectorId == directorId);
 
         director.FullName = updateDto.FullName;
 

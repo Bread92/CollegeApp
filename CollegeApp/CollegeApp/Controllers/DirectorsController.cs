@@ -4,6 +4,7 @@ using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class DirectorsController : Controller
     {
         private readonly IDirectorsService _directorsService;
@@ -19,7 +20,7 @@ namespace CollegeApp.Controllers
             return View(await _directorsService.GetAllAsync());
         }
 
-        [HttpGet]
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -37,13 +38,13 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DirectorId,FullName")] DirectorCreateDto directorCreateDto)
         {
@@ -54,39 +55,35 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var director = await _directorsService.GetOneAsync(id);
             
             if (director == null)
             {
                 return NotFound();
             }
-            return View(director);
+
+            var updatedDto = new DirectorUpdateDto()
+            {
+                FullName = director.FullName
+            };
+            
+            return View(updatedDto);
         }
 
-        [HttpPut]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("DirectorId,FullName")] DirectorDto director)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("FullName")] DirectorUpdateDto updateDto)
         {
-            if (id != director.DirectorId)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid) return View(director);
+            if (!ModelState.IsValid) return View(updateDto);
             
-            await _directorsService.UpdateAsync(id, director);
+            await _directorsService.UpdateAsync(id, updateDto);
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -106,7 +103,7 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Delete"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
