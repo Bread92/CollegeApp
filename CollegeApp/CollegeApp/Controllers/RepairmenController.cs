@@ -1,10 +1,10 @@
-using CollegeApp.Dtos;
 using CollegeApp.Dtos.Repairman;
 using Microsoft.AspNetCore.Mvc;
 using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class RepairmenController : Controller
     {
         private readonly IRepairmenService _repairmenService;
@@ -20,7 +20,7 @@ namespace CollegeApp.Controllers
             return View(await _repairmenService.GetAllAsync());
         }
 
-        // GET: Repairmen/Details/5
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -38,13 +38,13 @@ namespace CollegeApp.Controllers
             return View(repairman);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPut]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RepairmanId,FullName")] RepairmanCreateDto createDto)
         {
@@ -55,8 +55,8 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid? id)
         {
             if (id == null)
             {
@@ -69,26 +69,27 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
-            return View(repairman);
+
+            var updatedRepairman = new RepairmanUpdateDto()
+            {
+                FullName = repairman.FullName
+            };
+            
+            return View(updatedRepairman);
         }
 
-        [HttpPost]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RepairmanId,FullName")] RepairmanDto repairmanDto)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("FullName")] RepairmanUpdateDto updateDto)
         {
-            if (id != repairmanDto.RepairmanId)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid) return View(repairmanDto);
+            if (!ModelState.IsValid) return View(updateDto);
             
-            await _repairmenService.UpdateAsync(id, repairmanDto);
+            await _repairmenService.UpdateAsync(id, updateDto);
             
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

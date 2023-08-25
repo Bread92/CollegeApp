@@ -8,7 +8,7 @@ public interface IRepairmenService
 {
     public Task<RepairmanDto> CreateAsync(RepairmanCreateDto createDto);
     public Task<RepairmanDto?> GetOneAsync(Guid? repairmanId);
-    public Task<RepairmanDto> UpdateAsync(Guid repairmanId, RepairmanDto updateDto);
+    public Task<RepairmanDto> UpdateAsync(Guid repairmanId, RepairmanUpdateDto updateDto);
     public Task<RepairmanDto> DeleteAsync(Guid? repairmanId);
 
     public Task<ICollection<RepairmanDto>> GetAllAsync();
@@ -44,7 +44,7 @@ public class RepairmenService : IRepairmenService
         return repairman?.ToDto();
     }
 
-    public async Task<RepairmanDto> UpdateAsync(Guid repairmanId, RepairmanDto updateDto)
+    public async Task<RepairmanDto> UpdateAsync(Guid repairmanId, RepairmanUpdateDto updateDto)
     {
         var repairmanToUpdate = await _dbContext.Repairmen.FirstAsync(x => x.RepairmanId == repairmanId);
 
