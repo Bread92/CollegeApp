@@ -8,7 +8,7 @@ public interface ISectorsService
 {
     public Task<SectorDto> CreateAsync(SectorCreateDto createDto);
     public Task<SectorDto?> GetOneAsync(Guid? sectorId);
-    public Task<SectorDto> UpdateAsync(Guid sectorId, SectorDto updateDto);
+    public Task<SectorDto> UpdateAsync(Guid sectorId, SectorUpdateDto updateDto);
     public Task<SectorDto> DeleteAsync(Guid? sectorId);
 
     public Task<ICollection<SectorDto>> GetAllAsync();
@@ -44,7 +44,7 @@ public class SectorsService : ISectorsService
         return sector?.ToDto();
     }
 
-    public async Task<SectorDto> UpdateAsync(Guid sectorId, SectorDto updateDto)
+    public async Task<SectorDto> UpdateAsync(Guid sectorId, SectorUpdateDto updateDto)
     {
         var sectorToUpdate = await _dbContext.Sectors.FirstAsync(x => x.SectorId == sectorId);
 

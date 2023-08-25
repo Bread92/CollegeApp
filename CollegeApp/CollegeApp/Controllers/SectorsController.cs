@@ -5,6 +5,7 @@ using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class SectorsController : Controller
     {
         private readonly ISectorsService _sectorsService;
@@ -20,7 +21,7 @@ namespace CollegeApp.Controllers
             return View(await _sectorsService.GetAllAsync());
         }
 
-        [HttpGet]
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -38,13 +39,13 @@ namespace CollegeApp.Controllers
             return View(sector);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
         
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SectorId,Name")] SectorCreateDto createDto)
         {
@@ -55,8 +56,8 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid? id)
         {
             if (id == null)
             {
@@ -69,19 +70,19 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
+
+            var updatedSector = new SectorUpdateDto()
+            {
+                Name = sectorDto.Name
+            };
             
-            return View(sectorDto);
+            return View(updatedSector);
         }
         
-        [HttpPut]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("SectorId,Name")] SectorDto updateDto)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("Name")] SectorUpdateDto updateDto)
         {
-            if (id != updateDto.SectorId)
-            {
-                return NotFound();
-            }
-            
             if (!ModelState.IsValid) return View(updateDto);
 
             await _sectorsService.UpdateAsync(id ,updateDto);
@@ -89,7 +90,7 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
