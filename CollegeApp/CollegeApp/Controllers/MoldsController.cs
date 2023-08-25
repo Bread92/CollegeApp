@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class MoldsController : Controller
     {
         private readonly IMoldsService _moldsService;
@@ -26,7 +27,7 @@ namespace CollegeApp.Controllers
             return View(await _moldsService.GetAllAsync());
         }
 
-        [HttpGet]
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -44,7 +45,7 @@ namespace CollegeApp.Controllers
             return View(moldDto);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
             PopulateMoldsViewBagsAsync();
@@ -52,7 +53,7 @@ namespace CollegeApp.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MoldId,MoldPurposeId,Name,InstallationDate,WorkshopId")] MoldCreateDto createDto)
         {
@@ -65,8 +66,8 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid? id)
         {
             PopulateMoldsViewBagsAsync();
             
@@ -81,26 +82,29 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
-            return View(moldDto);
+
+            var updatedDto = new MoldUpdateDto()
+            {
+                Name = moldDto.Name,
+                MoldPurposeId = moldDto.MoldPurposeId,
+                WorkshopId = moldDto.WorkshopId
+            };
+            
+            return View(updatedDto);
         }
 
-        [HttpPut]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MoldId,MoldPurposeId,Name,InstallationDate,WorkshopId")] MoldDto moldDto)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("MoldPurposeId,Name,WorkshopId")] MoldUpdateDto updateDto)
         {
-            if (id != moldDto.MoldId)
-            {
-                return NotFound();
-            }
+            if (!ModelState.IsValid) return View(updateDto);
 
-            if (!ModelState.IsValid) return View(moldDto);
-
-            await _moldsService.UpdateAsync(id, moldDto);
+            await _moldsService.UpdateAsync(id, updateDto);
             
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

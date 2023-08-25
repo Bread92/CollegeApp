@@ -8,7 +8,7 @@ public interface IMoldsService
 {
     public Task<MoldDto> CreateAsync(MoldCreateDto createDto);
     public Task<MoldDto?> GetOneAsync(Guid? moldId);
-    public Task<MoldDto> UpdateAsync(Guid moldId, MoldDto updateDto);
+    public Task<MoldDto> UpdateAsync(Guid moldId, MoldUpdateDto updateDto);
     public Task<MoldDto> DeleteAsync(Guid? moldId);
 
     public Task<ICollection<MoldDto>> GetAllAsync();
@@ -47,18 +47,12 @@ public class MoldsService : IMoldsService
         return director?.ToDto();
     }
 
-    public async Task<MoldDto> UpdateAsync(Guid moldId, MoldDto updateDto)
+    public async Task<MoldDto> UpdateAsync(Guid moldId, MoldUpdateDto updateDto)
     {
-        var mold = await _dbContext.Molds.FirstOrDefaultAsync(x => x.MoldId == moldId);
-
-        if (mold is null)
-        {
-            return updateDto;
-        }
+        var mold = await _dbContext.Molds.FirstAsync(x => x.MoldId == moldId);
 
         mold.Name = updateDto.Name;
         mold.MoldPurposeId = updateDto.MoldPurposeId;
-        mold.InstallationDate = updateDto.InstallationDate;
         mold.WorkshopId = updateDto.WorkshopId;
 
         await _dbContext.SaveChangesAsync();
@@ -66,10 +60,10 @@ public class MoldsService : IMoldsService
         var updatedDto = new MoldDto()
         {
             MoldId = mold.MoldId,
-            Name= mold.Name,
+            InstallationDate = mold.InstallationDate,
+            Name = mold.Name,
             WorkshopId = mold.WorkshopId,
-            MoldPurposeId = mold.MoldPurposeId,
-            InstallationDate = mold.InstallationDate
+            MoldPurposeId = mold.MoldPurposeId
         };
 
         return updatedDto;
