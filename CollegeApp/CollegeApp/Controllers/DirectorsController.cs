@@ -80,6 +80,7 @@ namespace CollegeApp.Controllers
             if (!ModelState.IsValid) return View(updateDto);
             
             await _directorsService.UpdateAsync(id, updateDto);
+            
             return RedirectToAction(nameof(Index));
         }
 

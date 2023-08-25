@@ -97,6 +97,8 @@ namespace CollegeApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("MoldPurposeId,Name,WorkshopId")] MoldUpdateDto updateDto)
         {
+            PopulateMoldsViewBagsAsync();
+            
             if (!ModelState.IsValid) return View(updateDto);
 
             await _moldsService.UpdateAsync(id, updateDto);

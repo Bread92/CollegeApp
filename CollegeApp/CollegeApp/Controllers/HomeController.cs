@@ -4,6 +4,7 @@ using CollegeApp.Models;
 
 namespace CollegeApp.Controllers;
 
+[Route("api")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -12,12 +13,13 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
 
+    [HttpGet(nameof(Error))]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class WorkshopsController : Controller
     {
         private readonly IWorkshopsService _workshopsService;
@@ -26,7 +27,7 @@ namespace CollegeApp.Controllers
             return View(await _workshopsService.GetAllAsync());
         }
 
-        [HttpGet]
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -44,7 +45,7 @@ namespace CollegeApp.Controllers
             return View(workshop);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
             PopulateWorkshopsViewBagsAsync();
@@ -52,7 +53,7 @@ namespace CollegeApp.Controllers
             return View();
         }
         
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopCreateDto workshopCreateDto)
         {
@@ -65,8 +66,8 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid? id)
         {
             PopulateWorkshopsViewBagsAsync();
             
@@ -81,26 +82,31 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
-            return View(workshop);
+
+            var updatedWorkshop = new WorkshopUpdateDto()
+            {
+                Name = workshop.Name,
+                DirectorId = workshop.DirectorId,
+                SectorId = workshop.SectorId
+            };
+            
+            return View(updatedWorkshop);
         }
         
-        [HttpPut]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopDto workshopDto)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("Name,DirectorId,SectorId")] WorkshopUpdateDto updateDto)
         {
-            if (id != workshopDto.WorkshopId)
-            {
-                return NotFound();
-            }
+            PopulateWorkshopsViewBagsAsync();
+            
+            if (!ModelState.IsValid) return View(updateDto);
 
-            if (!ModelState.IsValid) return View(workshopDto);
-
-            await _workshopsService.UpdateAsync(id, workshopDto);
+            await _workshopsService.UpdateAsync(id, updateDto);
             
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
