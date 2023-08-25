@@ -84,7 +84,7 @@ namespace CollegeApp.Controllers
             return View(workshop);
         }
         
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("WorkshopId,Name,DirectorId,SectorId")] WorkshopDto workshopDto)
         {

@@ -84,7 +84,7 @@ namespace CollegeApp.Controllers
             return View(moldDto);
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("MoldId,MoldPurposeId,Name,InstallationDate,WorkshopId")] MoldDto moldDto)
         {

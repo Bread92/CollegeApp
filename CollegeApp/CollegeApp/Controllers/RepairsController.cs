@@ -84,7 +84,7 @@ namespace CollegeApp.Controllers
             return View(repair);
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("RepairId,RepairTime,RepairmanId,MoldId")] RepairDto repairDto)
         {

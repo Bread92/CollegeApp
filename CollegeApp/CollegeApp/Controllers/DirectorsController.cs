@@ -71,7 +71,7 @@ namespace CollegeApp.Controllers
             return View(director);
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("DirectorId,FullName")] DirectorDto director)
         {

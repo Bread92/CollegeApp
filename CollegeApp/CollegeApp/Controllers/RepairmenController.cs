@@ -44,7 +44,7 @@ namespace CollegeApp.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RepairmanId,FullName")] RepairmanCreateDto createDto)
         {
