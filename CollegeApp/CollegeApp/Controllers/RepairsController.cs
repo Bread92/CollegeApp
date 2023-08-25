@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
+    [Route("api/[controller]")]
     public class RepairsController : Controller
     {
         private readonly IRepairsService _repairsService;
@@ -26,7 +27,7 @@ namespace CollegeApp.Controllers
             return View(await _repairsService.GetAllAsync());
         }
 
-        [HttpGet]
+        [HttpGet("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -44,7 +45,7 @@ namespace CollegeApp.Controllers
             return View(repair);
         }
 
-        [HttpGet]
+        [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
             PopulateRepairsViewBagsAsync();
@@ -52,7 +53,7 @@ namespace CollegeApp.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RepairId,RepairTime,RepairmanId,MoldId,Description")] RepairCreateDto createDto)
         {
@@ -65,8 +66,8 @@ namespace CollegeApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid? id)
+        [HttpGet("Edit/{id:guid}")]
+        public async Task<IActionResult> Edit([FromRoute] Guid? id)
         {
             PopulateRepairsViewBagsAsync();
             
@@ -81,26 +82,31 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
-            return View(repair);
+
+            var updatedRepair = new RepairUpdateDto()
+            {
+                Description = repair.Description,
+                MoldId = repair.MoldId,
+                RepairmanId = repair.RepairmanId
+            };
+            
+            return View(updatedRepair);
         }
 
-        [HttpPut]
+        [HttpPost("Edit/{id:guid}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RepairId,RepairTime,RepairmanId,MoldId")] RepairDto repairDto)
+        public async Task<IActionResult> Edit([FromRoute] Guid id, [Bind("Description,RepairmanId,MoldId")] RepairUpdateDto updateDto)
         {
-            if (id != repairDto.RepairId)
-            {
-                return NotFound();
-            }
+            PopulateRepairsViewBagsAsync();
+            
+            if (!ModelState.IsValid) return View(updateDto);
 
-            if (!ModelState.IsValid) return View(repairDto);
-
-            await _repairsService.UpdateAsync(id, repairDto);
+            await _repairsService.UpdateAsync(id, updateDto);
             
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
