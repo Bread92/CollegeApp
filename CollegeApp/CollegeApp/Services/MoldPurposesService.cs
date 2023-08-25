@@ -8,7 +8,7 @@ public interface IMoldPurposesService
 {
     public Task<MoldPurposeDto> CreateAsync(MoldPurposeCreateDto createDto);
     public Task<MoldPurposeDto?> GetOneAsync(Guid? moldPurposeId);
-    public Task<MoldPurposeDto> UpdateAsync(Guid moldPurposeId, MoldPurposeDto updateDto);
+    public Task<MoldPurposeDto> UpdateAsync(Guid moldPurposeId, MoldPurposeUpdateDto updateDto);
     public Task<MoldPurposeDto> DeleteAsync(Guid? moldPurposeId);
 
     public Task<ICollection<MoldPurposeDto>> GetAllAsync();
@@ -44,14 +44,9 @@ public class MoldPurposesService : IMoldPurposesService
         return moldPurpose?.ToDto();
     }
 
-    public async Task<MoldPurposeDto> UpdateAsync(Guid moldPurposeId, MoldPurposeDto updateDto)
+    public async Task<MoldPurposeDto> UpdateAsync(Guid moldPurposeId, MoldPurposeUpdateDto updateDto)
     {
-        var moldPurpose = await _dbContext.MoldPurposes.FirstOrDefaultAsync(x => x.MoldPurposeId == moldPurposeId);
-
-        if (moldPurpose is null)
-        {
-            return updateDto;
-        }
+        var moldPurpose = await _dbContext.MoldPurposes.FirstAsync(x => x.MoldPurposeId == moldPurposeId);
 
         moldPurpose.PurposeName = updateDto.PurposeName;
 
