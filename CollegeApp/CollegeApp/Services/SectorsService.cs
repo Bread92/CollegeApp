@@ -1,5 +1,4 @@
-﻿using CollegeApp.Dtos;
-using CollegeApp.Dtos.Sector;
+﻿using CollegeApp.Dtos.Sector;
 using CollegeApp.Entities;
 using Microsoft.EntityFrameworkCore;
 

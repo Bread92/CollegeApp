@@ -1,5 +1,4 @@
-﻿using CollegeApp.Dtos;
-using CollegeApp.Dtos.Workshop;
+﻿using CollegeApp.Dtos.Workshop;
 using CollegeApp.Entities;
 using Microsoft.EntityFrameworkCore;
 
