@@ -55,7 +55,7 @@ namespace CollegeApp.Controllers
         }
 
         [HttpGet("Create")]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             PopulateMoldsViewBagsAsync();
             
