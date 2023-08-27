@@ -1,0 +1,47 @@
+﻿@using System.Data
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SqlQueryModel
+
+@{
+    ViewBag.Title = "SQL Executor";
+    Layout = "_Layout";
+}
+
+<h2>Sql Executor</h2>
+
+<form asp-action="Execute">
+    <div class="form-group">
+        <label for="myTextArea">Query:</label>
+        <textarea asp-for="Query" class="form-control" id="myTextArea" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+        @* this should have its own class *@
+        <input type="submit" value="Execute" class="btn btn-primary"/>
+    </div>
+</form>
+@if (Model.Result is not null)
+{
+    <table class="table">
+        <thead>
+        @foreach (DataColumn column in Model.Result.Columns)
+        {
+            <th>@column.ColumnName</th>
+        }
+        </thead>
+        <tbody>
+        @foreach (DataRow row in Model.Result.Rows)
+        {
+            <tr>
+                @foreach (var item in row.ItemArray)
+                {
+                    <td>@item</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@if (Model.ErrorMessage is not null)
+{
+    <span class="text-danger">@Model.ErrorMessage</span>
+}
