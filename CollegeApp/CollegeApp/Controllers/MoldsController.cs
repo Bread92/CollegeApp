@@ -45,10 +45,22 @@ namespace CollegeApp.Controllers
             // Displaying Names
             // Workshop
             var workshop = await _workshopsService.GetOneAsync(moldDto.WorkshopId);
+
+            if (workshop is null)
+            {
+                return NotFound();
+            }
+            
             ViewBag.WorkshopName = workshop.Name;
             
             //Purpose
             var purpose = await _moldPurposesService.GetOneAsync(moldDto.MoldPurposeId);
+            
+            if (purpose is null)
+            {
+                return NotFound();
+            }
+            
             ViewBag.PurposeName = purpose.PurposeName;
             
             return View(moldDto);
