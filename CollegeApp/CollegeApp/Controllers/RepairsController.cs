@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class RepairsController : Controller
     {
         private readonly IRepairsService _repairsService;

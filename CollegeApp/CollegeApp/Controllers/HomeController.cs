@@ -4,7 +4,6 @@ using CollegeApp.Models;
 
 namespace CollegeApp.Controllers;
 
-[Route("api")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

@@ -4,7 +4,7 @@ using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class MoldPurposesController : Controller
     {
         private readonly IMoldPurposesService _moldPurposesService;

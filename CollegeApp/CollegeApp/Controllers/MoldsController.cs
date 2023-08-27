@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CollegeApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class MoldsController : Controller
     {
         private readonly IMoldsService _moldsService;

@@ -4,7 +4,7 @@ using CollegeApp.Services;
 
 namespace CollegeApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class SectorsController : Controller
     {
         private readonly ISectorsService _sectorsService;
