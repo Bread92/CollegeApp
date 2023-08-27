@@ -17,10 +17,28 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
+            Workshop
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.WorkshopName
+        </dd>
+        <dt class = "col-sm-2">
+            Purpose
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.PurposeName
+        </dd>
+         <dt class = "col-sm-2">
             Installation Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.InstallationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            Id
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MoldId)
         </dd>
     </dl>
 </div>

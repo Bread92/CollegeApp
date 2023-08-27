@@ -41,6 +41,15 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
+            
+            // Displaying Names
+            // Director
+            var director = await _directorsService.GetOneAsync(workshop.DirectorId);
+            ViewBag.DirectorName = director.FullName;
+            
+            //Sector
+            var sector = await _sectorsService.GetOneAsync(workshop.SectorId);
+            ViewBag.SectorName = sector.Name;
 
             return View(workshop);
         }

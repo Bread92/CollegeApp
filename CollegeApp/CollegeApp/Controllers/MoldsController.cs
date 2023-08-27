@@ -41,7 +41,16 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
-
+            
+            // Displaying Names
+            // Workshop
+            var workshop = await _workshopsService.GetOneAsync(moldDto.WorkshopId);
+            ViewBag.WorkshopName = workshop.Name;
+            
+            //Purpose
+            var purpose = await _moldPurposesService.GetOneAsync(moldDto.MoldPurposeId);
+            ViewBag.PurposeName = purpose.PurposeName;
+            
             return View(moldDto);
         }
 

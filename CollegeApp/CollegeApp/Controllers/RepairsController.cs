@@ -41,6 +41,15 @@ namespace CollegeApp.Controllers
             {
                 return NotFound();
             }
+            
+            // Displaying names
+            // Mold
+            var mold = await _moldsService.GetOneAsync(repair.MoldId);
+            ViewBag.MoldName = mold.Name;
+            
+            // Repairman
+            var repairman = await _repairmenService.GetOneAsync(repair.RepairmanId);
+            ViewBag.RepairmanName = repairman.FullName;
 
             return View(repair);
         }
