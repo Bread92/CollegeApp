@@ -41,7 +41,7 @@ public class SqlExecutorController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> GenerateReport(SqlQueryModel model)
+    public async Task<IActionResult> GenerateWordReport(SqlQueryModel model)
     {
         var doc = await _sqlExecutorService.GetWordReport(model.Query);
         
