@@ -20,7 +20,7 @@ services.AddScoped<IMoldPurposesService, MoldPurposesService>();
 services.AddScoped<IRepairmenService, RepairmenService>();
 services.AddScoped<IRepairsService, RepairsService>();
 services.AddScoped<IMoldsService, MoldsService>();
-services.AddScoped<ISqlExecutorService, SqlExecutorServiceService>();
+services.AddScoped<ISqlExecutorService, SqlExecutorService>();
 
 var app = builder.Build();
 

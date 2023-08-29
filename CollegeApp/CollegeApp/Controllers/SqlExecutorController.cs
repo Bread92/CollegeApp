@@ -1,7 +1,6 @@
 ﻿using CollegeApp.Models;
 using CollegeApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using Novacode;
 
 namespace CollegeApp.Controllers;
 
@@ -43,12 +42,24 @@ public class SqlExecutorController : Controller
     [HttpPost]
     public async Task<IActionResult> GenerateWordReport(SqlQueryModel model)
     {
-        var doc = await _sqlExecutorService.GetWordReport(model.Query);
+        var wordReport = await _sqlExecutorService.GetWordReport(model.Query);
         
         var stream = new MemoryStream();
-        doc.SaveAs(stream);
+        wordReport.SaveAs(stream);
         stream.Seek(0, SeekOrigin.Begin);
 
         return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx", true);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> GenerateExcelReport(SqlQueryModel model)
+    {
+        var excelPackage = await _sqlExecutorService.GetExcelReport(model.Query);
+
+        var stream = new MemoryStream();
+        excelPackage.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Report.xlsx", true);
     }
 }

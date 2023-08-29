@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="DocXCore" Version="1.0.10" />
+      <PackageReference Include="EPPlus.Core" Version="1.5.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
         <PrivateAssets>all</PrivateAssets>

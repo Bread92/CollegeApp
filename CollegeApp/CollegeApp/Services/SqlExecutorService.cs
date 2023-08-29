@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Novacode;
+using OfficeOpenXml;
 
 namespace CollegeApp.Services;
 
@@ -9,19 +9,11 @@ public interface ISqlExecutorService
 {
     public Task<DataTable> ExecuteQuery(string stringQuery);
     public Task<DocX> GetWordReport(string stringQuery);
+    Task<ExcelPackage> GetExcelReport(string stringQuery);
 }
 
-public class SqlExecutorServiceService : ISqlExecutorService
+public class SqlExecutorService : ISqlExecutorService
 {
-    private readonly CollegeAppDbContext _dbContext;
-    private readonly IConfiguration _configuration;
-
-    public SqlExecutorServiceService(CollegeAppDbContext dbContext, IConfiguration configuration)
-    {
-        _dbContext = dbContext;
-        _configuration = configuration;
-    }
-
     public async Task<DocX> GetWordReport(string stringQuery)
     {
         var dataTable = await ExecuteQuery(stringQuery);
@@ -35,7 +27,6 @@ public class SqlExecutorServiceService : ISqlExecutorService
         {
             table.Rows[0].Cells[colIndex].Paragraphs.First().Append(dataTable.Columns[colIndex].ColumnName).Bold();
         }
-
         for (var rowIndex = 0; rowIndex < dataTable.Rows.Count; rowIndex++)
         {
             var dataRow = dataTable.Rows[rowIndex];
@@ -48,8 +39,26 @@ public class SqlExecutorServiceService : ISqlExecutorService
 
         return doc;
     }
+    public async Task<ExcelPackage> GetExcelReport(string stringQuery)
+    {
+        var dataTable = await ExecuteQuery(stringQuery);
+        var package = new ExcelPackage();
+        var worksheet = package.Workbook.Worksheets.Add("Report");
 
-    // Executer
+        for (var colIndex = 0; colIndex < dataTable.Columns.Count; colIndex++)
+        {
+            worksheet.Cells[1, colIndex + 1].Value = dataTable.Columns[colIndex].ColumnName;
+        }
+        for (var rowIndex = 0; rowIndex < dataTable.Rows.Count; rowIndex++)
+        {
+            var dataRow = dataTable.Rows[rowIndex];
+            for (var colIndex = 0; colIndex < dataTable.Columns.Count; colIndex++)
+            {
+                worksheet.Cells[rowIndex + 2, colIndex + 1].Value = dataRow[colIndex];
+            }
+        }
+        return package;
+    }
     public async Task<DataTable> ExecuteQuery(string stringQuery)
     {
         await using var connection = new SqliteConnection("Data Source=college.db");
