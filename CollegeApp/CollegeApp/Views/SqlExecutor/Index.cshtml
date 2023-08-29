@@ -15,8 +15,11 @@
         <textarea asp-for="Query" class="form-control" id="myTextArea" rows="4"></textarea>
     </div>
     <div class="form-group">
-        @* this should have its own class *@
         <input type="submit" value="Execute" class="btn btn-primary"/>
+        @if (Model.Query != "")
+        {
+            <input asp-action="GenerateReport" type="submit" value="Word Report" class="btn btn-primary"/>
+        }
     </div>
 </form>
 @if (Model.Result is not null)

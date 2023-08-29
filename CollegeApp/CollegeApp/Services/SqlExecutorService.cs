@@ -22,14 +22,14 @@ public class SqlExecutorServiceService : ISqlExecutorService
     // Executer
     public async Task<DataTable> ExecuteQuery(string stringQuery)
     {
-        await using SqliteConnection connection = new SqliteConnection("Data Source=college.db");
+        await using var connection = new SqliteConnection("Data Source=college.db");
         
         connection.Open();
-        SqliteCommand command = new SqliteCommand(stringQuery, connection);
+        var command = new SqliteCommand(stringQuery, connection);
         
-        await using SqliteDataReader reader = await command.ExecuteReaderAsync();
+        await using var reader = await command.ExecuteReaderAsync();
 
-        DataTable dataTable = new DataTable();
+        var dataTable = new DataTable();
         dataTable.Load(reader);
         return dataTable;
     }
