@@ -99,12 +99,10 @@ namespace CollegeApp.Controllers
                 return NotFound();
             }
 
-            await _directorsService.DeleteAsync(id);
-            
             return View(director);
         }
 
-        [HttpPost("Delete"), ActionName("Delete")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {

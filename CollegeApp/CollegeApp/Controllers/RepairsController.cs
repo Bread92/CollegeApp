@@ -133,16 +133,11 @@ namespace CollegeApp.Controllers
             return View(repair);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var repair = await _repairsService.GetOneAsync(id);
-            
-            if (repair != null)
-            {
-                await _repairsService.DeleteAsync(id);
-            }
+            await _repairsService.DeleteAsync(id);
             
             return RedirectToAction(nameof(Index));
         }

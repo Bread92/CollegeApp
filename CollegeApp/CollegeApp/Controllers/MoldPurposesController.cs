@@ -107,16 +107,11 @@ namespace CollegeApp.Controllers
             return View(moldPurpose);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var moldPurpose = await _moldPurposesService.GetOneAsync(id);
-            
-            if (moldPurpose != null)
-            {
-                await _moldPurposesService.DeleteAsync(id);
-            }
+            await _moldPurposesService.DeleteAsync(id);
             
             return RedirectToAction(nameof(Index));
         }

@@ -133,7 +133,7 @@ namespace CollegeApp.Controllers
             return View(workshop);
         }
         
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {

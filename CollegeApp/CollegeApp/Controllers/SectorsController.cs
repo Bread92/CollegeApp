@@ -107,16 +107,11 @@ namespace CollegeApp.Controllers
             return View(sectorDto);
         }
         
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var sector = await _sectorsService.GetOneAsync(id);
-
-            if (sector != null)
-            {
-                await _sectorsService.DeleteAsync(id);
-            }
+            await _sectorsService.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
